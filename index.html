@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      (function disableClosedShadowDom() {
+        Element.prototype._attachShadow = Element.prototype.attachShadow;
+        Element.prototype.attachShadow = function () {
+          return this._attachShadow({ mode: "open" });
+        };
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="pay-later-host"></div>
+
+    <script>
+      (function createPayLaterButton() {
+        const payLaterHost = document.querySelector("#pay-later-host");
+        const shadow = payLaterHost.attachShadow({ mode: "closed" });
+        const payLaterButton = document.createElement("button");
+        payLaterButton.innerText = "Pay Later";
+        shadow.appendChild(payLaterButton);
+      })();
+    </script>
+
+    <script>
+      function changePayLaterButtonLabel(newLabel) {
+        const payLaterHost = document.querySelector("#pay-later-host");
+        payLaterHost.shadowRoot.querySelector("button").innerText = newLabel;
+      }
+
+      changePayLaterButtonLabel("HACKED LABEL");
+    </script>
+  </body>
+</html>
